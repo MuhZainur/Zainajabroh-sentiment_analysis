@@ -31,3 +31,5 @@ jobs:
           token: ${{ secrets.HF_TOKEN }}
           # Jenis repository adalah 'space'
           repo_type: space
+          # Force push untuk menimpa konten di Space dengan versi terbaru
+          force: true
