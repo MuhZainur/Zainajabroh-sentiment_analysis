@@ -1,0 +1,33 @@
+name: Deploy to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-space:
+    runs-on: ubuntu-latest
+    steps:
+      # Langkah 1: Ambil kode dari repository GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Langkah 2: Lakukan push manual ke Hugging Face Space
+      - name: Push to Hugging Face Space
+        env:
+          # Ambil token dari GitHub Secrets
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # Konfigurasi git dengan user dummy
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          # Tambahkan remote repository untuk Hugging Face Space, sertakan token untuk otentikasi
+          # Ganti repo_id jika berbeda
+          git remote add space https://oauth:${HF_TOKEN}@huggingface.co/spaces/Zainajabroh/sentiment_analysis
+
+          # Lakukan force push dari branch 'main' di GitHub ke branch 'main' di Hugging Face Space
+          git push --force space main
