@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+google-play-scraper
+transformers
+torch
+sentencepiece
+matplotlib
+wordcloud
