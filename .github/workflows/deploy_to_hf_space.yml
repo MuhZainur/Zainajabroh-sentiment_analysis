@@ -1,35 +1,22 @@
-# .github/workflows/deploy_to_hf_space.yml
-
 name: Deploy to Hugging Face Space
 
-# Kapan resep ini dijalankan?
-# Yaitu setiap kali ada 'push' ke branch 'main'
 on:
   push:
     branches:
       - main
 
-# Apa saja pekerjaan yang harus dilakukan?
 jobs:
   deploy-to-hub:
-    # Jalankan pekerjaan ini di server Ubuntu terbaru
     runs-on: ubuntu-latest
     steps:
-      # Langkah 1: Ambil kode dari repository GitHub kita
       - uses: actions/checkout@v3
         with:
-          # Ambil semua history git, penting untuk proses push
           fetch-depth: 0
 
-      # Langkah 2: Lakukan push otomatis ke Hugging Face Hub (Space)
       - name: Push to Hub
         uses: huggingface-hub/push-to-hub-action@v5
         with:
-          # ID repository di Hugging Face (nama user/nama space)
           repo_id: "Zainajabroh/sentiment_analysis"
-          # Gunakan "kunci" yang sudah kita simpan di GitHub Secrets
           token: ${{ secrets.HF_TOKEN }}
-          # Jenis repository adalah 'space'
           repo_type: space
-          # Force push untuk menimpa konten di Space dengan versi terbaru
           force: true
